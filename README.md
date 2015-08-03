@@ -1,2 +1,0 @@
-# myim
-this is readme
