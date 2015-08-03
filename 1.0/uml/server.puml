@@ -1,0 +1,20 @@
+@startuml
+
+
+package com.jian.server <<Frame>>{
+    interface DBService
+    interface Server
+    class Account
+    class DBServiceImpl implements DBService
+    class ServerImpl implements Server
+    class DBServicePool
+    class DBServicePoolFactory
+
+}
+
+Server --> DBServiceFactory : create
+DBService --> Account : create
+DBServiceImpl *-->"1" DBServicePool : contains
+DBServiceFactory --> DBService: create
+
+@enduml
