@@ -20,5 +20,11 @@ public class Account
         _friendMap = friends;
     }
 
+    public String getName()
+    {
+        return _name;
+    }
+
+
 
 }

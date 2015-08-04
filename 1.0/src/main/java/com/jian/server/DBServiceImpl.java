@@ -9,24 +9,22 @@ import java.util.HashMap;
  */
 public class DBServiceImpl implements DBService {
 
-    private enum COLUMN
-    {
-        UID, NAME, FRIENDS, ADDRESS, PORT, STATUS
-    }
-
 
     public Account getAccount(String uid) throws SQLException, IOException {
-        String sqlString = "select * from AccountsTable where uid=" + uid;
+        String sqlString = "select * from hellotable where uid=\'" + uid + "\'";
         DBConnection dbConnection = DBConnectionPoolFactory.getFactory().getDBConnectionPool().getDBConnection();
         Connection connection = dbConnection.getConnection();
         Statement statement = connection.createStatement();
         ResultSet res = statement.executeQuery(sqlString);
-        String name = res.getString(COLUMN.NAME.ordinal());
-        String friends = res.getString(COLUMN.FRIENDS.ordinal());
-        HashMap friendsMap = getFriendsMap(friends, connection);
+        while(res.next()) {
+            String name = res.getString(AccountDB.NAME);
+            String friends = res.getString(AccountDB.FRIENDS);
+            HashMap friendsMap = getFriendsMap(friends, connection);
+            Account account = new Account(uid, name, friendsMap);
+            return account;
+        }
         dbConnection.releaseConnection();
-        Account account = new Account(uid, name, friendsMap);
-        return account;
+        return null;
     }
 
     private HashMap<String, Friend> getFriendsMap(String friendsIDs, Connection connection) throws SQLException {
@@ -37,15 +35,15 @@ public class DBServiceImpl implements DBService {
         String[] fArray = friendsIDs.split(";");
         for(String friendID : fArray)
         {
-            String sqlQuery = "select name, address, port, status from AccountsTable where uid=" + friendID;
+            String sqlQuery = "select name, address, port, status from hellotable where uid=\'" + friendID + "\'";
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery(sqlQuery);
-            if(res != null)
+            if(res != null && res.next())
             {
-                String name = res.getString(COLUMN.NAME.ordinal());
-                String address = res.getString(COLUMN.ADDRESS.ordinal());
-                String port = res.getString(COLUMN.PORT.ordinal());
-                boolean status = res.getBoolean(COLUMN.STATUS.ordinal());
+                String name = res.getString(AccountDB.NAME);
+                String address = res.getString(AccountDB.ADDRESS);
+                String port = res.getString(AccountDB.PORT);
+                boolean status = res.getBoolean(AccountDB.STATUS);
                 Friend friend = new Friend(friendID, name, address, port, status);
                 friendsMap.put(friendID, friend);
             }

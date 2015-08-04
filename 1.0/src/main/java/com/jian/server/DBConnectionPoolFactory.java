@@ -9,7 +9,7 @@ import java.util.Properties;
  */
 public class DBConnectionPoolFactory
 {
-    private static final String SERVER_DB_PROPERTY_FILE = "resources/server_db.properties";
+    private static final String SERVER_DB_PROPERTY_FILE = "server_db.properties";
     private static DBConnectionPoolFactory _factory = new DBConnectionPoolFactory();
     private DBConnectionPool _instance = null;
 

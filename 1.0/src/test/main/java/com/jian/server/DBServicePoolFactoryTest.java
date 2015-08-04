@@ -1,7 +1,14 @@
 package com.jian.server;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 
 import static org.junit.Assert.*;
 
@@ -10,15 +17,13 @@ import static org.junit.Assert.*;
  */
 public class DBServicePoolFactoryTest {
 
-    @Before
-    public void setUp() throws Exception {
 
-    }
 
     @Test
     public void testGetDBservicePool() throws Exception {
         DBConnectionPool pool = DBConnectionPoolFactory.getFactory().getDBConnectionPool();
         System.out.println("max size: " + pool.getMaxSize());
+
 
     }
 }

@@ -19,26 +19,29 @@ public class CreateDB {
             System.out.println("create and connect to helloDB");
             conn.setAutoCommit(false);
 
+
             // create a table and insert two records
             Statement s = conn.createStatement();
-            s.execute("create table hellotable(name varchar(40), score int)");
+            s.execute("drop table hellotable");
+            System.out.println("Dropped table hellotable");
+            s.execute("create table hellotable(uid varchar(20), name varchar(20), friends varchar(200), address varchar(20), port varchar(10), status boolean)");
             System.out.println("Created table hellotable");
-            s.execute("insert into hellotable values('Ruth Cao', 86)");
-            s.execute("insert into hellotable values ('Flora Shi', 92)");
+            s.execute("insert into hellotable values('001', 'Mike', '002', 'localhost', '1522', 'TRUE')");
+            s.execute("insert into hellotable values ('002', 'Grace', '001', 'localhost', '1522', 'TRUE')");
             // list the two records
             ResultSet rs = s.executeQuery(
-                    "SELECT name, score FROM hellotable ORDER BY score");
+                    "SELECT * FROM hellotable where uid='001'");
             System.out.println("name\t\tscore");
             while(rs.next()) {
                 StringBuilder builder = new StringBuilder(rs.getString(1));
                 builder.append("\t");
-                builder.append(rs.getInt(2));
+                builder.append(rs.getString(2));
                 System.out.println(builder.toString());
             }
             // delete the table
-            s.execute("drop table hellotable");
+            /*s.execute("drop table hellotable");
             System.out.println("Dropped table hellotable");
-
+               */
             rs.close();
             s.close();
             System.out.println("Closed result set and statement");
