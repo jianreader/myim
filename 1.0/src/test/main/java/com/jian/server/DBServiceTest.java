@@ -73,6 +73,8 @@ public class DBServiceTest {
             DBService dbService = new DBServiceImpl();
             Account a001 = dbService.getAccount("001");
             System.out.println("----- " + a001.getName());
+            Friend friend = a001.getFriendMap().get("002");
+            System.out.println("------" + friend.getName());
         }
         catch (Exception e)
         {

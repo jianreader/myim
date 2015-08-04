@@ -25,6 +25,9 @@ public class Account
         return _name;
     }
 
-
+    public HashMap<String, Friend> getFriendMap()
+    {
+        return _friendMap;
+    }
 
 }
