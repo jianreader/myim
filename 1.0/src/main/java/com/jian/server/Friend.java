@@ -1,9 +1,12 @@
 package com.jian.server;
 
+import java.io.Serializable;
+
 /**
  * Created by Patrick on 8/1/2015.
  */
-public class Friend {
+public class Friend implements Serializable{
+    private static final long serialVersionUID = 5950163219310163575L;
     private String _name;
     private String _address;
     private String _port;
@@ -49,5 +52,17 @@ public class Friend {
 
     public void setUid(String uid) {
         this._uid = uid;
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        if (_uid.equals(account.getUid())) return false;
+        return true;
+    }
+
+    public int hashCode() {
+        return Integer.parseInt(_uid);
     }
 }

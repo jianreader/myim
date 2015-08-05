@@ -10,6 +10,7 @@ import java.util.Properties;
  */
 public class Server implements Runnable
 {
+    public static final int SERVER_PORT = 2013;
     private DBConnectionPool _dbConnectionPool;
 
     public Server() throws IOException

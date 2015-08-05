@@ -9,4 +9,6 @@ import java.sql.SQLException;
 public interface DBService
 {
    public Account getAccount(String uid) throws SQLException, IOException;
+
+    public Account login(String uid, String password) throws SQLException, IOException, LoginException;
 }

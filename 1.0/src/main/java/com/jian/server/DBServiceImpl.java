@@ -27,6 +27,32 @@ public class DBServiceImpl implements DBService {
         return null;
     }
 
+    public Account login(String uid, String password) throws SQLException, IOException, LoginException{
+        if(password == null)
+        {
+            throw new LoginException("No Password!");
+        }
+        String sqlString = "select * from hellotable where uid=\'" + uid + "\'";
+        DBConnection dbConnection = DBConnectionPoolFactory.getFactory().getDBConnectionPool().getDBConnection();
+        Connection connection = dbConnection.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet res = statement.executeQuery(sqlString);
+        while(res.next()) {
+            String pw = res.getString(AccountDB.PW);
+            if(!password.equals(pw))
+            {
+                throw new LoginException("Wrong Password!");
+            }
+            String name = res.getString(AccountDB.NAME);
+            String friends = res.getString(AccountDB.FRIENDS);
+            HashMap friendsMap = getFriendsMap(friends, connection);
+            Account account = new Account(uid, name, friendsMap);
+            return account;
+        }
+        dbConnection.releaseConnection();
+        throw new LoginException("User does NOT exist!");
+    }
+
     private HashMap<String, Friend> getFriendsMap(String friendsIDs, Connection connection) throws SQLException {
         HashMap<String, Friend> friendsMap = new HashMap<String, Friend>();
         if(friendsIDs == null || friendsIDs == "")

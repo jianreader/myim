@@ -15,4 +15,5 @@ public interface AccountDB {
     public static final String ADDRESS="address";
     public static final String PORT="port";
     public static final String STATUS="status";
+    public static final String PW="pw";
 }
