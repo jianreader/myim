@@ -12,6 +12,26 @@ public class Account implements Serializable
     private String _name;
     private HashMap<String, Friend> _friendMap = new HashMap<String, Friend>();
     private String _uid;
+    private boolean _isOnline;
+
+    public boolean isOnline() {
+        return _isOnline;
+    }
+
+    public void setOnline(boolean isOnline) {
+        this._isOnline = isOnline;
+    }
+
+
+
+    public String getAddress() {
+        return _address;
+    }
+
+    public String getPort() {
+        return _port;
+    }
+
     private String _address;
     private String _port;
 

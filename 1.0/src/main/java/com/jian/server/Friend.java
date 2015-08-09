@@ -30,11 +30,11 @@ public class Friend implements Serializable{
         this._name = name;
     }
 
-    public String getUrl() {
+    public String getAddress() {
         return _address;
     }
 
-    public void setUrl(String url) {
+    public void setAddress(String url) {
         this._address = url;
     }
 
@@ -52,6 +52,16 @@ public class Friend implements Serializable{
 
     public void setUid(String uid) {
         this._uid = uid;
+    }
+
+    public String getPort()
+    {
+        return _port;
+    }
+
+    public void setPort(String port)
+    {
+        _port = port;
     }
 
     public boolean equals(Object o) {

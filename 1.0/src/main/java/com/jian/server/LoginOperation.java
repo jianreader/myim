@@ -10,7 +10,7 @@ public class LoginOperation {
     private String _user ;
     private String _password;
 
-    LoginOperation(String line) throws LoginException {
+    public LoginOperation(String line) throws LoginException {
         String[] array = line.split(":");
         if(array.length != 2)
             throw new LoginException("Wrong Login Message");
@@ -19,7 +19,7 @@ public class LoginOperation {
 
     }
 
-    LoginOperation(String user, String password)
+    public LoginOperation(String user, String password)
     {
         _user = user;
         _password = password;
@@ -28,6 +28,7 @@ public class LoginOperation {
     public Account Login() throws LoginException, SQLException, IOException {
         DBService dbService = new DBServiceImpl();
         Account account = dbService.login(_user, _password);
+        dbService.updateDB(_user, AccountDB.STATUS, "true");
         return account;
     }
 }

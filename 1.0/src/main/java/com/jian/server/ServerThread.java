@@ -1,7 +1,8 @@
 package com.jian.server;
 
+import com.jian.protocol.ImProtocol;
+
 import java.io.*;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -20,6 +21,7 @@ public class ServerThread extends Thread {
 
         System.out.println("server running ...");
         try {
+
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(_clientSocket.getInputStream()));
 
             PrintWriter printWriter = new PrintWriter(_clientSocket.getOutputStream(), true);

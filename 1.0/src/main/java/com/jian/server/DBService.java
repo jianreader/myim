@@ -11,4 +11,6 @@ public interface DBService
    public Account getAccount(String uid) throws SQLException, IOException;
 
     public Account login(String uid, String password) throws SQLException, IOException, LoginException;
+
+    public void updateDB(String uid, String attribute, String value) throws SQLException, IOException;
 }

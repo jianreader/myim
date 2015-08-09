@@ -11,7 +11,7 @@ public class DBServiceImpl implements DBService {
 
 
     public Account getAccount(String uid) throws SQLException, IOException {
-        String sqlString = "select * from hellotable where uid=\'" + uid + "\'";
+        String sqlString = "select * from " + AccountDB.ACCOUNTTABLE + " where " + AccountDB.UID + "=\'" + uid + "\'";
         DBConnection dbConnection = DBConnectionPoolFactory.getFactory().getDBConnectionPool().getDBConnection();
         Connection connection = dbConnection.getConnection();
         Statement statement = connection.createStatement();
@@ -32,7 +32,7 @@ public class DBServiceImpl implements DBService {
         {
             throw new LoginException("No Password!");
         }
-        String sqlString = "select * from hellotable where uid=\'" + uid + "\'";
+        String sqlString = "select * from " + AccountDB.ACCOUNTTABLE + " where " + AccountDB.UID + "=\'" + uid + "\'";
         DBConnection dbConnection = DBConnectionPoolFactory.getFactory().getDBConnectionPool().getDBConnection();
         Connection connection = dbConnection.getConnection();
         Statement statement = connection.createStatement();
@@ -47,10 +47,20 @@ public class DBServiceImpl implements DBService {
             String friends = res.getString(AccountDB.FRIENDS);
             HashMap friendsMap = getFriendsMap(friends, connection);
             Account account = new Account(uid, name, friendsMap);
+            dbConnection.releaseConnection();
             return account;
         }
         dbConnection.releaseConnection();
         throw new LoginException("User does NOT exist!");
+    }
+
+    public void updateDB(String uid, String attribute, String value) throws SQLException, IOException {
+        String sqlString = "update " + AccountDB.ACCOUNTTABLE + " set " + attribute + " = \'" + value + "\'" + " where " + AccountDB.UID + " = \'" + uid + "\'";
+        DBConnection dbConnection = DBConnectionPoolFactory.getFactory().getDBConnectionPool().getDBConnection();
+        Connection connection = dbConnection.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet res = statement.executeQuery(sqlString);
+        dbConnection.releaseConnection();
     }
 
     private HashMap<String, Friend> getFriendsMap(String friendsIDs, Connection connection) throws SQLException {
@@ -61,7 +71,7 @@ public class DBServiceImpl implements DBService {
         String[] fArray = friendsIDs.split(";");
         for(String friendID : fArray)
         {
-            String sqlQuery = "select name, address, port, status from hellotable where uid=\'" + friendID + "\'";
+            String sqlQuery = "select " + AccountDB.NAME + ", " + AccountDB.ADDRESS + ", " + AccountDB.PORT + ", " + AccountDB.STATUS + ", from " + AccountDB.ACCOUNTTABLE + " where " + AccountDB.UID + "=\'" + friendID + "\'";
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery(sqlQuery);
             if(res != null && res.next())
@@ -76,6 +86,7 @@ public class DBServiceImpl implements DBService {
         }
         return friendsMap;
     }
+
 
 
 }
