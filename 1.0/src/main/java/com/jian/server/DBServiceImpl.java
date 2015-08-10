@@ -59,7 +59,7 @@ public class DBServiceImpl implements DBService {
         DBConnection dbConnection = DBConnectionPoolFactory.getFactory().getDBConnectionPool().getDBConnection();
         Connection connection = dbConnection.getConnection();
         Statement statement = connection.createStatement();
-        ResultSet res = statement.executeQuery(sqlString);
+        boolean res = statement.execute(sqlString);
         dbConnection.releaseConnection();
     }
 
@@ -71,7 +71,7 @@ public class DBServiceImpl implements DBService {
         String[] fArray = friendsIDs.split(";");
         for(String friendID : fArray)
         {
-            String sqlQuery = "select " + AccountDB.NAME + ", " + AccountDB.ADDRESS + ", " + AccountDB.PORT + ", " + AccountDB.STATUS + ", from " + AccountDB.ACCOUNTTABLE + " where " + AccountDB.UID + "=\'" + friendID + "\'";
+            String sqlQuery = "select " + AccountDB.NAME + ", " + AccountDB.ADDRESS + ", " + AccountDB.PORT + ", " + AccountDB.STATUS + " from " + AccountDB.ACCOUNTTABLE + " where " + AccountDB.UID + "=\'" + friendID + "\'";
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery(sqlQuery);
             if(res != null && res.next())
