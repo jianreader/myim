@@ -26,8 +26,9 @@ public class CreateDB {
             System.out.println("Dropped table hellotable");
             s.execute("create table hellotable(uid varchar(20), name varchar(20), pw varchar(10), friends varchar(200), address varchar(20), port varchar(10), status boolean)");
             System.out.println("Created table hellotable");
-            s.execute("insert into hellotable values('001', 'Mike', 'pw1', '002',  'localhost', '1522', 'TRUE')");
-            s.execute("insert into hellotable values ('002', 'Grace', 'pw2', '001', 'localhost', '1522', 'TRUE')");
+            s.execute("insert into hellotable values('001', 'Mike', 'pw1', '002;003',  'localhost', '1522', 'TRUE')");
+            s.execute("insert into hellotable values ('002', 'Grace', 'pw2', '001;003', 'localhost', '1522', 'TRUE')");
+            s.execute("insert into hellotable values ('003', 'Josh', 'pw3', '001;002', 'localhost', '1522', 'TRUE')");
             // list the two records
             ResultSet rs = s.executeQuery(
                     "SELECT * FROM hellotable where uid='001'");

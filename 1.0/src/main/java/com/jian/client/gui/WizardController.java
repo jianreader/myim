@@ -25,29 +25,8 @@ public class WizardController {
 
     public void setupFriendPage(Account account)
     {
-        _jframe.getContentPane().removeAll();
-        //Create the menu bar.  Make it have a green background.
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.setOpaque(true);
-        menuBar.setBackground(new Color(70, 94, 165));
-        menuBar.setPreferredSize(new Dimension(250, 30));
-
-        JMenu fileMenu = new JMenu("File");
-        JMenuItem addFriendMenuItem = new JMenuItem("Add Friend ...");
-
-        //Create a yellow label to put in the content pane.
-        JLabel yellowLabel = new JLabel();
-        yellowLabel.setOpaque(true);
-        yellowLabel.setBackground(new Color(244, 248, 239));
-        yellowLabel.setPreferredSize(new Dimension(200, 180));
-
-        //Set the menu bar and add the label to the content pane.
-        _jframe.setJMenuBar(menuBar);
-        _jframe.getContentPane().add(yellowLabel, BorderLayout.CENTER);
-
-        //Display the window.
-        _jframe.pack();
-        _jframe.setVisible(true);
+        ImMainWindow mainWindow = new ImMainWindow(account, _jframe);
+        mainWindow.setupGUI();
     }
 
 }
